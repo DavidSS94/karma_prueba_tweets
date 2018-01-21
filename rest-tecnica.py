@@ -18,7 +18,6 @@ app.config['MONGO_URI'] = 'mongodb://localhost:27017/app'
 mongo = PyMongo(app)
 
 # Endpoint 1: Regresa: Total Tweets, Total Usuarios Unicos, Menciones Unicas, Total Hastags Unicos
-# @app.route('/totales', methods=['POST'])
 @app.route('/endpoint_1', methods=['POST'])
 def get_all_totals():
     tweets = mongo.db.tweets
@@ -26,8 +25,8 @@ def get_all_totals():
     searchId = request.json['searchId']
     initialDate = dateutil.parser.parse(request.json['initialDate'])
     finalDate = dateutil.parser.parse(request.json['finalDate'])
-    if id_exist(searchId):
-        if compare_data(searchId, initialDate, finalDate):
+    if compare_data(searchId, initialDate, finalDate):
+        if id_exist(searchId):
             if compare_dates(initialDate, finalDate):
                 totaltweets = tweets.find({
                     'busquedaId': searchId, 'postedTime': { '$gte': initialDate, '$lt': finalDate, } ,
@@ -65,13 +64,12 @@ def get_all_totals():
             else:
                 return jsonify({'Error': 'La fecha inicial debe ser menor que la final'})
         else:
-            return jsonify({'Error': 'Ingrese todos los datos'})
+            return jsonify({'Error': 'La busqueda solicitada, no existe'})
     else:
-        return jsonify({'Error': 'La busqueda solicitada, no existe'})
+        return jsonify({'Error': 'Ingrese todos los datos'})
 
 
 # Endpoint 2: Usuario con más tweets
-# @app.route('/unique_users', methods=['POST'])
 @app.route('/endpoint_2', methods=['POST'])
 def get_unique_users():
     tweets = mongo.db.tweets
@@ -79,8 +77,8 @@ def get_unique_users():
     searchId = request.json['searchId']
     initialDate = dateutil.parser.parse(request.json['initialDate'])
     finalDate = dateutil.parser.parse(request.json['finalDate'])
-    if id_exist(searchId):
-        if compare_data(searchId, initialDate, finalDate):
+    if compare_data(searchId, initialDate, finalDate):
+        if id_exist(searchId):
             if compare_dates(initialDate, finalDate):
                 count = tweets.aggregate([
                         { '$match': { 'busquedaId': searchId, 'postedTime': { '$gte': initialDate, '$lt': finalDate, } }},
@@ -96,12 +94,11 @@ def get_unique_users():
             else:
                 return jsonify({'Error': 'La fecha inicial debe ser menor que la final'})
         else:
-            return jsonify({'Error': 'Ingrese todos los datos'})
+            return jsonify({'Error': 'La busqueda solicitada, no existe'})
     else:
-        return jsonify({'Error': 'La busqueda solicitada, no existe'})
+        return jsonify({'Error': 'Ingrese todos los datos'})
 
 # Endpoint 3: Top 10 Hastags más repetidos
-# @app.route('/top_hashtags', methods=['POST'])
 @app.route('/endpoint_3', methods=['POST'])
 def get_top_hastags():
     tweets = mongo.db.tweets
@@ -109,8 +106,8 @@ def get_top_hastags():
     searchId = request.json['searchId']
     initialDate = dateutil.parser.parse(request.json['initialDate'])
     finalDate = dateutil.parser.parse(request.json['finalDate'])
-    if id_exist(searchId):
-        if compare_data(searchId, initialDate, finalDate):
+    if compare_data(searchId, initialDate, finalDate):
+        if id_exist(searchId):
             if compare_dates(initialDate, finalDate):
                 count = tweets.aggregate([
                     { '$match': { 'busquedaId': searchId, 'postedTime': { '$gte': initialDate, '$lt': finalDate, } }},
@@ -127,12 +124,11 @@ def get_top_hastags():
             else:
                 return jsonify({'Error': 'La fecha inicial debe ser menor que la final'})
         else:
-            return jsonify({'Error': 'Ingrese todos los datos'})
+            return jsonify({'Error': 'La busqueda solicitada, no existe'})
     else:
-        return jsonify({'Error': 'La busqueda solicitada, no existe'})
+        return jsonify({'Error': 'Ingrese todos los datos'})
 
 # Endpoint 4: Tipo de tweet y porcentaje
-# @app.route('/tweet_types', methods=['POST'])
 @app.route('/endpoint_4', methods=['POST'])
 def get_tweets_type():
     tweets = mongo.db.tweets
@@ -141,8 +137,8 @@ def get_tweets_type():
     initialDate = dateutil.parser.parse(request.json['initialDate'])
     finalDate = dateutil.parser.parse(request.json['finalDate'])
     total = tweets.count({ 'busquedaId': searchId, 'postedTime': { '$gte': initialDate, '$lt': finalDate }})
-    if id_exist(searchId):
-        if compare_data(searchId, initialDate, finalDate):
+    if compare_data(searchId, initialDate, finalDate):
+        if id_exist(searchId):
             if compare_dates(initialDate, finalDate):
                 count = tweets.aggregate([
                     { '$match': { 'busquedaId': searchId, 'postedTime': { '$gte': initialDate, '$lt': finalDate, } }},
@@ -155,16 +151,16 @@ def get_tweets_type():
             else:
                 return jsonify({'Error': 'La fecha inicial debe ser menor que la final'})
         else:
-            return jsonify({'Error': 'Ingrese todos los datos'})
+            return jsonify({'Error': 'La busqueda solicitada, no existe'})
     else:
-        return jsonify({'Error': 'La busqueda solicitada, no existe'})
+        return jsonify({'Error': 'Ingrese todos los datos'})
 
 def id_exist(search):
     busquedas = mongo.db.busquedas
     id = search
+    output = []
     resultado = busquedas.find({ '_id': ObjectId(id)}).count()
-    # return jsonify({'result': resultado})
-    if str(resultado) === '1':
+    if str(resultado) == '1':
         return True
     else:
         return False
