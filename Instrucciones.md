@@ -6,9 +6,9 @@ Instrucciones de uso del REST API:
 
 # NOTA: si por alguna cuestión llega a marcar error por la falta de las librerías usadas (dateutil.parser, flask_pymongo, flask_cors), tendrá que instalarlas con los siguientes comando:
 
-# pip install -U python-dateutil
-# pip install -U flask-cors
-# pip install -U Flask-PyMongo
+- pip install -U python-dateutil
+- pip install -U flask-cors
+- pip install -U Flask-PyMongo
 
 - Para realizar el consumo de los endpoints puede hacerlo mediante el CLI por medio del comando **curl**.
 
