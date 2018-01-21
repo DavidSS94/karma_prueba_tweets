@@ -162,10 +162,9 @@ def get_tweets_type():
 def id_exist(search):
     busquedas = mongo.db.busquedas
     id = search
-    output = []
     resultado = busquedas.find({ '_id': ObjectId(id)}).count()
     # return jsonify({'result': resultado})
-    if str(resultado) == '1':
+    if str(resultado) === '1':
         return True
     else:
         return False

@@ -12,12 +12,12 @@ Instrucciones de uso del REST API:
 
 - Para realizar el consumo de los endpoints puede hacerlo mediante el CLI por medio del comando **curl**.
 
-**Endpoint 1:** Devolver el número de tweets, número total de usuarios únicos, menciones únicas y hashtags únicos de toda la búsqueda.
+# Endpoint 1: Devolver el número de tweets, número total de usuarios únicos, menciones únicas y hashtags únicos de toda la búsqueda.
 
-# Consumo:
+**Consumo:**
 curl -d '{ "searchId" : "559d590abc0926835ba0bf41", "initialDate" : "2015-07-08", "finalDate" : "2015-07-10" }' -H "Content-Type: application/json" -X POST http://127.0.0.1:5000/endpoint_1
 
-# Respuesta:
+**Respuesta:**
 {
   "result": [
     {
@@ -35,12 +35,12 @@ curl -d '{ "searchId" : "559d590abc0926835ba0bf41", "initialDate" : "2015-07-08"
   ]
 }
 
-**Endpoint 2:** Usuario con mayor número de tweets en la búsqueda.
+# Endpoint 2: Usuario con mayor número de tweets en la búsqueda.
 
-# Consumo:
+**Consumo:**
 curl -d '{ "searchId" : "559d590abc0926835ba0bf41", "initialDate" : "2015-07-08", "finalDate" : "2015-07-10" }' -H "Content-Type: application/json" -X POST http://127.0.0.1:5000/endpoint_2
 
-# Respuesta:
+**Respuesta:**
 {
   "result": [
     {
@@ -51,12 +51,12 @@ curl -d '{ "searchId" : "559d590abc0926835ba0bf41", "initialDate" : "2015-07-08"
 }
 
 
-**Endpoint 3:** Top 10 de los hashtags con mayores apariciones en la búsqueda.
+# Endpoint 3: Top 10 de los hashtags con mayores apariciones en la búsqueda.
 
-# Consumo:
+**Consumo:**
 curl -d '{ "searchId" : "559d590abc0926835ba0bf41", "initialDate" : "2015-07-08", "finalDate" : "2015-07-10" }' -H "Content-Type: application/json" -X POST http://127.0.0.1:5000/endpoint_3
 
-# Respuesta:
+**Respuesta:**
 {
   "result": [
     {
@@ -102,12 +102,12 @@ curl -d '{ "searchId" : "559d590abc0926835ba0bf41", "initialDate" : "2015-07-08"
   ]
 }
 
-**Endpoint 4:** Porcentaje de retweets y tweets originales.
+# Endpoint 4: Porcentaje de retweets y tweets originales.
 
-# Consumo:
+**Consumo:**
 curl -d '{ "searchId" : "559d590abc0926835ba0bf41", "initialDate" : "2015-07-08", "finalDate" : "2015-07-10" }' -H "Content-Type: application/json" -X POST http://127.0.0.1:5000/endpoint_4
 
-# Respuesta:
+**Respuesta:**
 {
   "result": [
     {
@@ -121,4 +121,36 @@ curl -d '{ "searchId" : "559d590abc0926835ba0bf41", "initialDate" : "2015-07-08"
       "type": "original"
     }
   ]
+}
+
+# Validaciones
+
+*Cada endpoint debe de validar que la búsqueda solicitada exista.*
+**Consumo**
+curl -d '{ "searchId" : "000000000000000000000000", "initialDate" : "2015-07-08", "finalDate" : "2015-07-10" }' -H "Content-Type: application/json" -X POST http://127.0.0.1:5000/endpoint_4
+
+**Respuesta**
+{
+  "Error": "La busqueda solicitada, no existe"
+}
+
+
+*Validar que los 3 campos requeridos vengan en la petición.*
+**Consumo**
+curl -d '{ "searchId" : "", "initialDate" : "2015-07-08", "finalDate" : "2015-07-10" }' -H "Content-Type: application/json" -X POST http://127.0.0.1:5000/endpoint_4
+
+
+**Respuesta**
+{
+  "Error": "Ingrese todos los datos"
+}
+
+
+*Validar que la fecha inicial sea menor que la final.*
+**Consumo**
+curl -d '{ "searchId" : "559d590abc0926835ba0bf41", "initialDate" : "2015-07-08", "finalDate" : "2015-07-08" }' -H "Content-Type: application/json" -X POST http://127.0.0.1:5000/endpoint_4
+
+**Respuesta**
+{
+  "Error": "La fecha inicial debe ser menor que la final"
 }
