@@ -125,7 +125,8 @@ curl -d '{ "searchId" : "559d590abc0926835ba0bf41", "initialDate" : "2015-07-08"
 
 # Validaciones
 
-*Cada endpoint debe de validar que la búsqueda solicitada exista.*
+- Cada endpoint debe de validar que la búsqueda solicitada exista.
+
 **Consumo**
 curl -d '{ "searchId" : "000000000000000000000000", "initialDate" : "2015-07-08", "finalDate" : "2015-07-10" }' -H "Content-Type: application/json" -X POST http://127.0.0.1:5000/endpoint_4
 
@@ -135,10 +136,10 @@ curl -d '{ "searchId" : "000000000000000000000000", "initialDate" : "2015-07-08"
 }
 
 
-*Validar que los 3 campos requeridos vengan en la petición.*
+- Validar que los 3 campos requeridos vengan en la petición.
+
 **Consumo**
 curl -d '{ "searchId" : "", "initialDate" : "2015-07-08", "finalDate" : "2015-07-10" }' -H "Content-Type: application/json" -X POST http://127.0.0.1:5000/endpoint_4
-
 
 **Respuesta**
 {
@@ -146,7 +147,8 @@ curl -d '{ "searchId" : "", "initialDate" : "2015-07-08", "finalDate" : "2015-07
 }
 
 
-*Validar que la fecha inicial sea menor que la final.*
+- Validar que la fecha inicial sea menor que la final.
+
 **Consumo**
 curl -d '{ "searchId" : "559d590abc0926835ba0bf41", "initialDate" : "2015-07-08", "finalDate" : "2015-07-08" }' -H "Content-Type: application/json" -X POST http://127.0.0.1:5000/endpoint_4
 
