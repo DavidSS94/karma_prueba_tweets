@@ -21,16 +21,16 @@ curl -d '{ "searchId" : "559d590abc0926835ba0bf41", "initialDate" : "2015-07-08"
 {
   "result": [
     {
-      "totaltweets": 2766
+      "totaltweets": 44
     },
     {
-      "totalusers": 2050
+      "totalusers": 41
     },
     {
-      "totalhastags": 517
+      "totalhastags": 25
     },
     {
-      "totalmencionesunicas": 488
+      "totalmencionesunicas": 37
     }
   ]
 }
@@ -121,4 +121,37 @@ curl -d '{ "searchId" : "559d590abc0926835ba0bf41", "initialDate" : "2015-07-08"
       "type": "original"
     }
   ]
+}
+
+# Validaciones
+
+- Cada endpoint debe de validar que la búsqueda solicitada exista.
+
+**Consumo**
+curl -d '{ "searchId" : "000000000000000000000000", "initialDate" : "2015-07-08", "finalDate" : "2015-07-10" }' -H "Content-Type: application/json" -X POST http://127.0.0.1:5000/endpoint_4
+
+**Respuesta**
+{
+  "Error": "La busqueda solicitada, no existe"
+}
+
+- Validar que los 3 campos requeridos vengan en la petición.
+
+**Consumo**
+curl -d '{ "searchId" : "", "initialDate" : "2015-07-08", "finalDate" : "2015-07-10" }' -H "Content-Type: application/json" -X POST http://127.0.0.1:5000/endpoint_4
+
+**Respuesta**
+{
+  "Error": "Ingrese todos los datos"
+}
+
+
+- Validar que la fecha inicial sea menor que la final.
+
+**Consumo**
+curl -d '{ "searchId" : "559d590abc0926835ba0bf41", "initialDate" : "2015-07-08", "finalDate" : "2015-07-08" }' -H "Content-Type: application/json" -X POST http://127.0.0.1:5000/endpoint_4
+
+**Respuesta**
+{
+  "Error": "La fecha inicial debe ser menor que la final"
 }
