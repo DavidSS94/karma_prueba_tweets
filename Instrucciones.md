@@ -4,7 +4,7 @@ Instrucciones de uso del REST API:
 - En la carpeta donde se encuentra el archivo rest-tecnica.py, deberá ejecutar el comando: **source prueba-tecnica/bin/activate**
 - Una vez ejecutado el comando anterior, corra el archivo .py con python: **python rest-tecnica.py**
 
-# NOTA: si por alguna cuestión llega a marcar error por la falta de las librerías usadas (dateutil.parser, flask_pymongo, flask_cors), tendrá que instalarlas con los siguientes comando:
+*NOTA: si por alguna cuestión llega a marcar error por la falta de las librerías usadas (dateutil.parser, flask_pymongo, flask_cors), tendrá que instalarlas con los siguientes comando:*
 
 - pip install -U python-dateutil
 - pip install -U flask-cors
